@@ -11,6 +11,8 @@
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Terminal Layout Manager</Title>
     <PackageIcon>Square44x44Logo.scale-200.png</PackageIcon>
+    <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
+    <AnalysisLevel>preview-recommended</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,7 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MahApps.Metro" Version="2.4.10" />
     <PackageReference Include="ModernWpfUI" Version="0.9.6" />
   </ItemGroup>
 
