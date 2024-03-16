@@ -174,19 +174,7 @@ namespace TerminalLayoutManager
             }
         }
 
-        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            if (sender is TextBox textBox)
-            {
-                EditingTextBox = textBox;
-                /*if (textBox.DataContext is EditableFileName dataItem)
-                {
-                    dataItem.IsEditing = true;
-                }*/
-            }
-        }
-
-        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        private void OnTextBoxLostFocus(object sender)
         {
             if (sender is TextBox textBox)
             {
@@ -197,6 +185,11 @@ namespace TerminalLayoutManager
                         toolTip.Content = string.Empty;
                         toolTip.IsOpen = false; // Manually close the tooltip
                         toolTip.Visibility = Visibility.Collapsed;
+                    }
+
+                    if (dataItem.IsEditing == false)
+                    { 
+                        return;
                     }
 
                     if (!_filenamePattern.IsMatch(textBox.Text))
@@ -224,6 +217,27 @@ namespace TerminalLayoutManager
                     File.Move(oldFilePath, newFilePath);
                 }
             }
+        }
+
+        private void TextBox_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter) 
+            {
+                OnTextBoxLostFocus(sender);
+            }
+        }
+
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                EditingTextBox = textBox;
+            }
+        }
+
+        private void TextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            OnTextBoxLostFocus(sender);
         }
 
 
@@ -289,7 +303,7 @@ namespace TerminalLayoutManager
                 {
                     FileName = terminalPath,
                     UseShellExecute = true,
-                    Verb = (bool)RunAsAdmin.IsChecked ? "runas" : "",  
+                    Verb = RunAsAdmin.IsChecked == true ? "runas" : "",  
                 };
                 Process.Start(startInfo);  // Launch Windows Terminal
             }

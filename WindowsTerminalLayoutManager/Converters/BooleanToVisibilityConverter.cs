@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Data;
 using System.Windows;
 
-namespace TerminalLayoutManager.Utils
+namespace TerminalLayoutManager.Converters
 {
     public class BooleanToVisibilityConverter : IValueConverter
     {

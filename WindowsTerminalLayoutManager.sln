@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.9.34701.34
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalLayoutManager", "WindowsTerminalLayoutManager\TerminalLayoutManager.csproj", "{97E8FF9A-26CD-41B4-A78C-91AFDB03E99E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerminalLayoutManager", "WindowsTerminalLayoutManager\TerminalLayoutManager.csproj", "{97E8FF9A-26CD-41B4-A78C-91AFDB03E99E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TerminalPackages", "TerminalPackages\TerminalPackages.csproj", "{051CFF28-98BD-45E8-B2E0-E2ACBE4F6C28}"
-EndProject
-Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "TLM", "TLM\TLM.wapproj", "{5BB70DE9-A321-4026-A809-5E19FE038020}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TerminalPackages", "TerminalPackages\TerminalPackages.csproj", "{051CFF28-98BD-45E8-B2E0-E2ACBE4F6C28}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,36 +61,6 @@ Global
 		{051CFF28-98BD-45E8-B2E0-E2ACBE4F6C28}.Release|x64.Build.0 = Release|Any CPU
 		{051CFF28-98BD-45E8-B2E0-E2ACBE4F6C28}.Release|x86.ActiveCfg = Release|Any CPU
 		{051CFF28-98BD-45E8-B2E0-E2ACBE4F6C28}.Release|x86.Build.0 = Release|Any CPU
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|ARM.ActiveCfg = Debug|ARM
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|ARM.Build.0 = Debug|ARM
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|ARM.Deploy.0 = Debug|ARM
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|ARM64.ActiveCfg = Debug|ARM64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|ARM64.Build.0 = Debug|ARM64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|ARM64.Deploy.0 = Debug|ARM64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|x64.ActiveCfg = Debug|x64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|x64.Build.0 = Debug|x64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|x64.Deploy.0 = Debug|x64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|x86.ActiveCfg = Debug|x86
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|x86.Build.0 = Debug|x86
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Debug|x86.Deploy.0 = Debug|x86
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|Any CPU.Deploy.0 = Release|Any CPU
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|ARM.ActiveCfg = Release|ARM
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|ARM.Build.0 = Release|ARM
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|ARM.Deploy.0 = Release|ARM
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|ARM64.ActiveCfg = Release|ARM64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|ARM64.Build.0 = Release|ARM64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|ARM64.Deploy.0 = Release|ARM64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|x64.ActiveCfg = Release|x64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|x64.Build.0 = Release|x64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|x64.Deploy.0 = Release|x64
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|x86.ActiveCfg = Release|x86
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|x86.Build.0 = Release|x86
-		{5BB70DE9-A321-4026-A809-5E19FE038020}.Release|x86.Deploy.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

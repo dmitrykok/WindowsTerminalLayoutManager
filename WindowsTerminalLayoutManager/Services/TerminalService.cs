@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Diagnostics;
 using System.Text.Json;
+using System.Windows;
 
 namespace TerminalLayoutManager.Services
 {
@@ -8,7 +9,17 @@ namespace TerminalLayoutManager.Services
     {
         private static readonly string StateFileName = "state.json";
         private static readonly string LocalAppDataPackages = @"%LOCALAPPDATA%\Packages";
-        // private static readonly Regex terminalPattern = WTRegex();
+
+        private Dictionary<string, TerminalInfo>? _packages;
+        private Dictionary<string, TerminalInfo> Packages 
+        {
+            get
+            {
+                _packages ??= FindInstalledTerminals();
+                var packages = _packages.ToDictionary(entry => entry.Key, entry => entry.Value.Clone());
+                return packages;
+            }
+        }
 
         public static Dictionary<string, TerminalInfo> FindInstalledTerminals()
         {
@@ -33,10 +44,9 @@ namespace TerminalLayoutManager.Services
             return receivedDict;
         }
 
-        // Method to find all Windows Terminal instances and their state.json locations
         public Dictionary<string, TerminalInfo> FindAllTerminals()
         {
-            Dictionary<string, TerminalInfo> packages = FindInstalledTerminals();
+            var packages = Packages;
             var appDataPackagesPath = Environment.ExpandEnvironmentVariables(LocalAppDataPackages);
 
             if (Directory.Exists(appDataPackagesPath))
@@ -80,8 +90,5 @@ namespace TerminalLayoutManager.Services
             // Launch the terminal after updating its layout
             Process.Start("wt.exe");
         }
-
-        /*[GeneratedRegex(@"WindowsTerminal(?:|Canary|Preview|Dev)_")]
-        private static partial Regex WTRegex();*/
     }
 }

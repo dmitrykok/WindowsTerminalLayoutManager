@@ -18,7 +18,20 @@ namespace TerminalLayoutManager.Services
         public string LogoAbsoluteUri { get; set; } = logoAbsoluteUri;
         public string InstalledLocationPath { get; set; } = installedLocationPath;
         public List<string> LocalStateFiles { get; set; } = new List<string>();
-        // public Process? Process { get; set; }
+
+        public TerminalInfo Clone()
+        {
+            return new TerminalInfo(
+                TerminalName,
+                FamilyName,
+                DisplayName,
+                LogoAbsoluteUri,
+                InstalledLocationPath)
+            {
+                // Ensure a deep copy of the list by copying each element
+                LocalStateFiles = new List<string>(LocalStateFiles)
+            };
+        }
     }
 
     internal class Program
