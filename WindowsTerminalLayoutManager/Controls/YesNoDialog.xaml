@@ -4,7 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TerminalLayoutManager.Controls"
+        xmlns:modernWpf="http://schemas.modernwpf.com/2019"
         mc:Ignorable="d"
+        modernWpf:WindowHelper.UseModernWindowStyle="True"
+        modernWpf:TitleBar.ExtendViewIntoTitleBar="False"
+        modernWpf:ThemeManager.IsThemeAware="True"
         WindowStartupLocation="CenterOwner"
         Title="YesNoDialog" Height="200" Width="300" ResizeMode="NoResize" WindowStyle="ToolWindow" Icon="/Controls/Square44x44Logo.scale.u-200.png">
     <Grid Margin="10">
@@ -13,7 +17,7 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0">
-            <TextBlock x:Name="DialogMessage" Text="This is a custom dialog." Margin="0" HorizontalAlignment="Center" />
+            <TextBlock x:Name="DialogMessage" Text="This is a custom dialog." Margin="0" HorizontalAlignment="Center" TextWrapping="Wrap"/>
         </StackPanel>
         <!-- Add more controls here as needed -->
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Bottom" Grid.Row="1" Margin="5">

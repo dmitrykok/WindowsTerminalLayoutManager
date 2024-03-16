@@ -61,7 +61,8 @@
                                     <TextBox Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" 
                                              Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}" 
                                              LostFocus="TextBox_LostFocus"
-                                             TextChanged="TextBox_TextChanged">
+                                             TextChanged="TextBox_TextChanged"
+                                             GotFocus="TextBox_GotFocus">
                                         <TextBox.ToolTip>
                                             <!--ToolTip Content="{Binding FileNameError}" 
                                                      Visibility="{Binding FileNameErrorVisibility}" 

@@ -1,18 +1,12 @@
-﻿using MahApps.Metro.Controls;
-using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Shapes;
 using TerminalLayoutManager.Controls;
 using TerminalLayoutManager.Services;
 using TerminalLayoutManager.Utils;
-//using MahApps.Metro;
 using Path = System.IO.Path;
 
 namespace TerminalLayoutManager
@@ -29,7 +23,9 @@ namespace TerminalLayoutManager
         private string? LayoutInformationLastSelectedFilePath { get; set; }
         private string? CurrentLayoutPath { get; set; }
 
-        private readonly Regex _filenamePattern = new Regex(@"^state_[a-zA-Z0-9_\-]+\.json$", RegexOptions.IgnoreCase);
+        private readonly Regex _filenamePattern = StateFileNameRegex();
+
+        private TextBox? EditingTextBox { get; set;}
 
         private bool ShowCustomDialog(string messageBoxText, string caption)
         {
@@ -72,7 +68,6 @@ namespace TerminalLayoutManager
                 {
                     PopulateTerminalInfo();
                 }
-                
             }
         }
 
@@ -118,6 +113,18 @@ namespace TerminalLayoutManager
 
         private void LayoutInformation_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            foreach (EditableFileName item in e.RemovedItems)
+            {
+                if (item.IsEditing)
+                {
+                    item.IsEditing = false;
+                    // Ensure the item's FileNameErrorIsOpen is set to false to close any open tooltips
+                    item.FileNameErrorIsOpen = false;
+                    item.FileNameError = string.Empty;
+                    item.FileNameErrorVisibility = Visibility.Collapsed;
+                }
+            }
+
             LayoutInformationLastSelectedIndex = LayoutInformation.SelectedIndex;
             if (LayoutInformation.SelectedItem is EditableFileName dataItem)
             {
@@ -167,6 +174,18 @@ namespace TerminalLayoutManager
             }
         }
 
+        private void TextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (sender is TextBox textBox)
+            {
+                EditingTextBox = textBox;
+                /*if (textBox.DataContext is EditableFileName dataItem)
+                {
+                    dataItem.IsEditing = true;
+                }*/
+            }
+        }
+
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
         {
             if (sender is TextBox textBox)
@@ -195,7 +214,8 @@ namespace TerminalLayoutManager
                     var newFilePath = Path.Combine(directory, dataItem.FileName);
 
                     // Update the collection
-                    int index = SelectedTerminalInfo.LocalStateFiles.FindIndex(fileName => Path.GetFileName(fileName) == LayoutInformationLastSelectedFile);
+                    int index = SelectedTerminalInfo.LocalStateFiles.FindIndex(
+                        fileName => Path.GetFileName(fileName) == LayoutInformationLastSelectedFile);
                     if (index != -1)
                     {
                         SelectedTerminalInfo.LocalStateFiles[index] = newFilePath;
@@ -234,7 +254,7 @@ namespace TerminalLayoutManager
         private void DeleteSelectedButton_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath) &&
-                ShowCustomDialog("Are you sure ?", 
+                ShowCustomDialog($"Delete File:\n'{LayoutInformationLastSelectedFile}' ?",
                                  "Delete Selected Layout File"))
             {
                 File.Delete(LayoutInformationLastSelectedFilePath);
@@ -275,5 +295,7 @@ namespace TerminalLayoutManager
             }
         }
 
+        [GeneratedRegex(@"^state_[a-zA-Z0-9_\-]+\.json$", RegexOptions.IgnoreCase, "en-US")]
+        private static partial Regex StateFileNameRegex();
     }
 }
