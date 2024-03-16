@@ -1,0 +1,90 @@
+﻿<Window x:Class="TerminalLayoutManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WindowsTerminalLayoutManager"
+        xmlns:converters="clr-namespace:TerminalLayoutManager.Utils"
+        mc:Ignorable="d"
+        xmlns:modernWpf="http://schemas.modernwpf.com/2019"
+        Title="Windows Terminal Layout Manager" Height="450" Width="800"
+        Loaded="MainWindow_Loaded" 
+        MinWidth="800" MinHeight="450" MaxWidth="800" MaxHeight="450" 
+        UseLayoutRounding="False" WindowStartupLocation="CenterScreen" ResizeMode="CanMinimize" 
+        Icon="/Controls/Square44x44Logo.scale.u-200.png"
+        modernWpf:WindowHelper.UseModernWindowStyle="True"
+        modernWpf:TitleBar.ExtendViewIntoTitleBar="False"
+        modernWpf:ThemeManager.IsThemeAware="True">
+    <Window.Resources>
+        <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    </Window.Resources>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!--ListView x:Name="TerminalInstanceSelector" Margin="5" Grid.Row="0">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
+                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" />
+                    <GridViewColumn Header="Last Used" DisplayMemberBinding="{Binding LastUsed}" />
+                </GridView>
+            </ListView.View>
+        </ListView-->
+        <ComboBox x:Name="TerminalInstanceSelector" Margin="5" Grid.Row="0" SelectionChanged="TerminalInstanceSelector_SelectionChanged" >
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="{Binding ImageSource}" Height="20" Width="20" Margin="0,0,5,0" />
+                        <TextBlock Text="{Binding DisplayName}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <ListView x:Name="LayoutInformation" 
+                  Margin="5" Grid.Row="1" 
+                  SelectionChanged="LayoutInformation_SelectionChanged" 
+                  MouseDoubleClick="ListView_MouseDoubleClick" 
+                  SelectionMode="Single">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Layout">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <modernWpf:SimpleStackPanel>
+                                    <TextBlock Text="{Binding FileName}" 
+                                               Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=Inverted}" />
+                                    <TextBox Text="{Binding FileName, UpdateSourceTrigger=PropertyChanged}" 
+                                             Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}" 
+                                             LostFocus="TextBox_LostFocus"
+                                             TextChanged="TextBox_TextChanged">
+                                        <TextBox.ToolTip>
+                                            <!--ToolTip Content="{Binding FileNameError}" 
+                                                     Visibility="{Binding FileNameErrorVisibility}" 
+                                                     IsOpen="{Binding FileNameErrorIsOpen}" /-->
+                                            <ToolTip BorderBrush="Red" FontWeight="Bold" FontStretch="Condensed" Foreground="Red"/>
+                                        </TextBox.ToolTip>
+                                    </TextBox>
+                                </modernWpf:SimpleStackPanel>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <!--Canvas x:Name="LayoutPreviewCanvas" Width="200" Height="200" Background="LightGray" Grid.Row="1" Margin="10"/-->
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Grid.Row="2" Margin="5">
+            <Button x:Name="DuplicateSelectedButton" Content="Duplicate Selected" Margin="5" Click="DuplicateSelectedButton_Click"/>
+            <Button x:Name="DeleteSelectedButton" Content="Delete Selected" Margin="5" Click="DeleteSelectedButton_Click"/>
+            <Button x:Name="SaveCurrentButton" Content="Duplicate Default" Margin="5" Click="SaveCurrentButton_Click"/>
+            <Button x:Name="LoadSelectedButton" Content="Start Selected Layout" Margin="5" Click="LoadSelectedButton_Click"/>
+            <CheckBox x:Name="RunAsAdmin" Content="Run As Admin" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
