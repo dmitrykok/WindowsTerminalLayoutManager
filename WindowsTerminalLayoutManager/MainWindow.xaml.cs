@@ -97,7 +97,7 @@ namespace TerminalLayoutManager
                 var displayNameProperty = selectedItem.GetType().GetProperty("DisplayName");
                 if (displayNameProperty != null)
                 {
-                    TerminalLastSelectedName = (string)displayNameProperty.GetValue(selectedItem);
+                    TerminalLastSelectedName = displayNameProperty.GetValue(selectedItem) as string;
                     // Now you can use displayName as needed
                 }
             }
