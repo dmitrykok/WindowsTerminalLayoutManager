@@ -8,6 +8,7 @@ using TerminalLayoutManager.Controls;
 using TerminalLayoutManager.Services;
 using TerminalLayoutManager.Utils;
 using Path = System.IO.Path;
+using Directory = System.IO.Directory;
 
 namespace TerminalLayoutManager
 {
@@ -25,6 +26,8 @@ namespace TerminalLayoutManager
 
         private readonly Regex _filenamePattern = StateFileNameRegex();
 
+        private string? CWDPath { get; set; }
+
         private TextBox? EditingTextBox { get; set;}
 
         private bool ShowCustomDialog(string messageBoxText, string caption)
@@ -41,6 +44,11 @@ namespace TerminalLayoutManager
         {
             InitializeComponent();
             _terminalService = new TerminalService();
+            CWDPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WindowsTerminalLayoutManager");
+            if (!Directory.Exists(CWDPath))
+            {
+                Directory.CreateDirectory(CWDPath);
+            }
         }
 
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
@@ -309,7 +317,23 @@ namespace TerminalLayoutManager
             }
         }
 
-        [GeneratedRegex(@"^state_[a-zA-Z0-9_\-]+\.json$", RegexOptions.IgnoreCase, "en-US")]
+        private void OpenFolderButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath) &&
+                !string.IsNullOrEmpty(CurrentLayoutPath) &&
+                SelectedTerminalInfo != null) 
+            {
+                var startInfo = new ProcessStartInfo
+                {
+                    FileName = "Explorer.exe",
+                    UseShellExecute = false,
+                    ArgumentList = { "/root,", Path.GetDirectoryName(CurrentLayoutPath) },
+                };
+                Process.Start(startInfo);
+            }
+        }
+
+            [GeneratedRegex(@"^state_[a-zA-Z0-9_\-]+\.json$", RegexOptions.IgnoreCase, "en-US")]
         private static partial Regex StateFileNameRegex();
     }
 }

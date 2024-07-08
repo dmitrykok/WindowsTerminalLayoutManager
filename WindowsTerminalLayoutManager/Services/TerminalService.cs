@@ -30,6 +30,7 @@ namespace TerminalLayoutManager.Services
                 Verb = "runas",  // Request elevated privileges
                 RedirectStandardOutput = true,
                 CreateNoWindow = true,
+                WorkingDirectory = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "WindowsTerminalLayoutManager"),
             };
 
             string receivedJson = string.Empty;
