@@ -7,24 +7,33 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <UseWPF>true</UseWPF>
     <ApplicationManifest>app.manifest</ApplicationManifest>
-    <ApplicationIcon>Icons\terminal.ico</ApplicationIcon>
+    <ApplicationIcon>Icons\Logo.ico</ApplicationIcon>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <Title>Terminal Layout Manager</Title>
-    <PackageIcon>Square44x44Logo.scale-200.png</PackageIcon>
+    <PackageIcon>Logo.png</PackageIcon>
     <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
     <AnalysisLevel>preview-recommended</AnalysisLevel>
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Controls\Logo.png" />
     <None Remove="Controls\Square44x44Logo.scale.u-200.png" />
+    <None Remove="Icons\Logo.png" />
+    <None Remove="Logo.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Icons\terminal.ico" />
+    <Resource Include="Controls\Logo.png" />
+    <Resource Include="Icons\Logo.ico" />
+    <Resource Include="Icons\Logo.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Resources\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,7 +49,8 @@
 
   <ItemGroup>
     <Resource Include="Controls\Square44x44Logo.scale.u-200.png" />
-  </ItemGroup>
+    <Resource Include="Logo.png" />
+  </ItemGroup>	
 
   <ItemGroup>
     <Compile Update="Properties\Resources.Designer.cs">

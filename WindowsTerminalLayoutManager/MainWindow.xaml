@@ -8,16 +8,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:modernWpf="http://schemas.modernwpf.com/2019"
     Title="Windows Terminal Layout Manager"
-    Width="800"
+    Width="850"
     Height="450"
-    MinWidth="800"
+    MinWidth="850"
     MinHeight="450"
-    MaxWidth="800"
+    MaxWidth="850"
     MaxHeight="450"
     modernWpf:ThemeManager.IsThemeAware="True"
     modernWpf:TitleBar.ExtendViewIntoTitleBar="False"
     modernWpf:WindowHelper.UseModernWindowStyle="True"
-    Icon="/Controls/Square44x44Logo.scale.u-200.png"
+    Icon="/Logo.png"
     Loaded="MainWindow_Loaded"
     ResizeMode="CanMinimize"
     UseLayoutRounding="False"
@@ -130,6 +130,11 @@
                 Margin="5"
                 Click="LoadSelectedButton_Click"
                 Content="Start Selected Layout" />
+            <Button
+                x:Name="OpenFolderButton"
+                Margin="5"
+                Click="OpenFolderButton_Click"
+                Content="Open Folder" />
             <CheckBox
                 x:Name="RunAsAdmin"
                 Margin="5"

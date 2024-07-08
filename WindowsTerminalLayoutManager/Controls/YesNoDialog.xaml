@@ -10,7 +10,7 @@
         modernWpf:TitleBar.ExtendViewIntoTitleBar="False"
         modernWpf:ThemeManager.IsThemeAware="True"
         WindowStartupLocation="CenterOwner"
-        Title="YesNoDialog" Height="200" Width="300" ResizeMode="NoResize" WindowStyle="ToolWindow" Icon="/Controls/Square44x44Logo.scale.u-200.png">
+        Title="YesNoDialog" Height="200" Width="300" ResizeMode="NoResize" WindowStyle="ToolWindow" Icon="/Controls/Logo.png">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
