@@ -15,6 +15,7 @@ namespace TerminalLayoutManager.Utils
         private string fileNameError = string.Empty;
         private Visibility fileNameErrorVisibility = Visibility.Collapsed;
         private bool fileNameErrorIsOpen = false;
+        public string LayoutDescription { get; set; }
 
         public string FileNameError
         {

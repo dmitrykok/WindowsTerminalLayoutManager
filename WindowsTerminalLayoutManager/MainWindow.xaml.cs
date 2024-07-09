@@ -7,9 +7,11 @@ using System.Windows.Input;
 using TerminalLayoutManager.Controls;
 using TerminalLayoutManager.Services;
 using TerminalLayoutManager.Utils;
+using Microsoft.Win32.TaskScheduler;
 using Path = System.IO.Path;
 using Directory = System.IO.Directory;
 using ModernWpf;
+using TerminalLayoutManager;
 
 namespace TerminalLayoutManager
 {
@@ -55,6 +57,18 @@ namespace TerminalLayoutManager
         private void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
             PopulateTerminalInstances();
+        }
+
+        private void DisplayLayoutDescription(EditableFileName dataItem)
+        {
+            if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath))
+            {
+                var jsonContent = File.ReadAllText(LayoutInformationLastSelectedFilePath);
+                var layoutInfo = LayoutParser.ParseLayout(jsonContent);
+                var description = LayoutParser.GenerateLayoutDescription(layoutInfo);
+
+                dataItem.LayoutDescription = description;
+            }
         }
 
         private void PopulateTerminalInstances()
@@ -146,6 +160,7 @@ namespace TerminalLayoutManager
                         .Where(fileName => Path.GetFileName(fileName) == LayoutInformationLastSelectedFile)
                         .ToList()[0];
                 }
+                DisplayLayoutDescription(dataItem);
             }
         }
 
@@ -262,7 +277,7 @@ namespace TerminalLayoutManager
 
         private void DuplicateSelectedButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath))
+            /*if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath))
             {
                 var directory = Path.GetDirectoryName(LayoutInformationLastSelectedFilePath);
                 var newFileName = $"state_{DateTime.Now:yyyyMMddHHmmss}.json";
@@ -270,19 +285,21 @@ namespace TerminalLayoutManager
 
                 File.Copy(LayoutInformationLastSelectedFilePath, newFilePath);
                 PopulateTerminalInstances();  // Assume this method refreshes the ListView
-            }
+            }*/
+            DuplicateItem();
         }
 
 
         private void DeleteSelectedButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath) &&
+            /*if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath) &&
                 ShowCustomDialog($"Delete File:\n'{LayoutInformationLastSelectedFile}' ?",
                                  "Delete Selected Layout File"))
             {
                 File.Delete(LayoutInformationLastSelectedFilePath);
                 PopulateTerminalInstances();
-            }
+            }*/
+            DeleteItem();
         }
 
 
@@ -302,7 +319,7 @@ namespace TerminalLayoutManager
 
         private void LoadSelectedButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath) &&
+            /*if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath) &&
                 !string.IsNullOrEmpty(CurrentLayoutPath) &&
                 SelectedTerminalInfo != null)
             {
@@ -315,7 +332,8 @@ namespace TerminalLayoutManager
                     Verb = RunAsAdmin.IsChecked == true ? "runas" : "",  
                 };
                 Process.Start(startInfo);  // Launch Windows Terminal
-            }
+            }*/
+            StartItem(RunAsAdmin.IsChecked == true);
         }
 
         private void OpenFolderButton_Click(object sender, RoutedEventArgs e)
@@ -336,5 +354,114 @@ namespace TerminalLayoutManager
 
             [GeneratedRegex(@"^state_[a-zA-Z0-9_\-]+\.json$", RegexOptions.IgnoreCase, "en-US")]
         private static partial Regex StateFileNameRegex();
+
+        private void StackPanel_ContextMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            if (LayoutInformation.SelectedItem != null)
+            {
+                switch(e.Source as MenuItem)
+                {
+                    case MenuItem menuItem when menuItem.Name == "DuplicateMenuItem":
+                        DuplicateItem();
+                        break;
+                    case MenuItem menuItem when menuItem.Name == "DeleteMenuItem":
+                        DeleteItem();
+                        break;
+                    case MenuItem menuItem when menuItem.Name == "StartMenuItem":
+                        StartItem(false);
+                        break;
+                    case MenuItem menuItem when menuItem.Name == "StartAdminMenuItem":
+                        StartItem(true);
+                        break;
+                }
+            }
+        }
+
+        private void DuplicateItem()
+        {
+            if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath))
+            {
+                var directory = Path.GetDirectoryName(LayoutInformationLastSelectedFilePath);
+                var newFileName = $"state_{DateTime.Now:yyyyMMddHHmmss}.json";
+                var newFilePath = Path.Combine(directory, newFileName);
+
+                File.Copy(LayoutInformationLastSelectedFilePath, newFilePath);
+                PopulateTerminalInstances();  // Assume this method refreshes the ListView
+            }
+        }
+
+        private void DeleteItem()
+        {
+            if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath) &&
+                ShowCustomDialog($"Delete File:\n'{LayoutInformationLastSelectedFile}' ?",
+                                 "Delete Selected Layout File"))
+            {
+                File.Delete(LayoutInformationLastSelectedFilePath);
+                PopulateTerminalInstances();
+            }
+        }
+
+        private static void CreateScheduledTaskIfNotExists(string taskName, string applicationPath, string workingDirectory)
+        {
+            using (TaskService ts = new TaskService())
+            {
+                if (ts.GetTask(taskName) == null)
+                {
+                    TaskDefinition td = ts.NewTask();
+                    td.RegistrationInfo.Description = "Start Windows Terminal";
+
+                    td.Principal.LogonType = TaskLogonType.InteractiveToken;
+
+                    td.Actions.Add(new ExecAction(applicationPath, null, workingDirectory));
+
+                    ts.RootFolder.RegisterTaskDefinition(taskName, td);
+                }
+            }
+        }
+
+        private void StartItem(bool RunAsAdmin)
+        {
+            if (!string.IsNullOrEmpty(LayoutInformationLastSelectedFilePath) &&
+                !string.IsNullOrEmpty(CurrentLayoutPath) &&
+                SelectedTerminalInfo != null)
+            {
+                var user = Environment.UserName;
+                File.Copy(LayoutInformationLastSelectedFilePath, CurrentLayoutPath, true);
+                string terminalPath = Path.Combine(SelectedTerminalInfo.InstalledLocationPath, "WindowsTerminal.exe");
+                ProcessStartInfo startInfo;
+
+                if (RunAsAdmin)
+                {
+                    startInfo = new ProcessStartInfo
+                    {
+                        FileName = terminalPath,
+                        WorkingDirectory = SelectedTerminalInfo.InstalledLocationPath,
+                        UseShellExecute = true,
+                        Verb = "runas"
+                    };
+                }
+                else
+                {
+                    string taskName = Path.GetFileName(SelectedTerminalInfo.InstalledLocationPath);
+                    CreateScheduledTaskIfNotExists(taskName, terminalPath, SelectedTerminalInfo.InstalledLocationPath);
+
+                    startInfo = new ProcessStartInfo
+                    {
+                        FileName = "schtasks.exe",
+                        Arguments = $"/run /tn \"{taskName}\"",
+                        UseShellExecute = false,
+                        RedirectStandardOutput = true,
+                        RedirectStandardError = true,
+                        CreateNoWindow = true
+                    };
+                }
+                Process.Start(startInfo);  // Launch Windows Terminal
+            }
+        }
+
+        private void StackPanel_ContextMenuOpening(object sender, ContextMenuEventArgs e)
+        {
+
+        }
     }
 }

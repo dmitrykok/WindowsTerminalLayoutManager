@@ -1,9 +1,37 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--  Colors for ListView Item States  -->
+    <SolidColorBrush x:Key="ListViewItemSelectedBackgroundBrush" Color="#0B3B5B" />
+    <SolidColorBrush x:Key="ListViewItemSelectedForegroundBrush" Color="White" />
+    <SolidColorBrush x:Key="ListViewItemNotSelectedBackgroundBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="ListViewItemNotSelectedForegroundBrush" Color="LightGray" />
+    <SolidColorBrush x:Key="ListViewItemMouseOverNotSelectedBackgroundBrush" Color="#343434" />
+    <SolidColorBrush x:Key="ListViewItemMouseOverSelectedBackgroundBrush" Color="#FF105583" />
+
     <Style x:Key="ButtonStyle" TargetType="Button">
         <Setter Property="Margin" Value="5" />
         <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundAltHighBrush}" />
         <Setter Property="Foreground" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}">
+                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="{DynamicResource ListViewItemMouseOverSelectedBackgroundBrush}" />
+                            <Setter Property="Foreground" Value="{DynamicResource ListViewItemSelectedForegroundBrush}" />
+                            <Setter Property="BorderBrush" Value="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 
     <!--  ToggleButton Template for ComboBox  -->
@@ -147,6 +175,9 @@
 
     <Style x:Key="CheckBoxStyle" TargetType="CheckBox">
         <Setter Property="Margin" Value="5" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Foreground" Value="{DynamicResource SystemControlForegroundBaseHighBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource SystemControlForegroundBaseMediumBrush}" />
     </Style>
 
 </ResourceDictionary>

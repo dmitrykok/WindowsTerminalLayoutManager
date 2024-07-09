@@ -37,6 +37,8 @@
 
   <ItemGroup>
     <PackageReference Include="ModernWpfUI" Version="0.9.6" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="TaskScheduler" Version="2.11.0" />
   </ItemGroup>
 
   <ItemGroup>

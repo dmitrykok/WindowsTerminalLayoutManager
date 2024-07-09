@@ -1,5 +1,12 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    <!--  Colors for ListView Item States  -->
+    <SolidColorBrush x:Key="ListViewItemSelectedBackgroundBrush" Color="LightBlue" />
+    <SolidColorBrush x:Key="ListViewItemSelectedForegroundBrush" Color="Black" />
+    <SolidColorBrush x:Key="ListViewItemNotSelectedBackgroundBrush" Color="Transparent" />
+    <SolidColorBrush x:Key="ListViewItemNotSelectedForegroundBrush" Color="Black" />
+    <SolidColorBrush x:Key="ListViewItemMouseOverBackgroundBrush" Color="LightGray" />
+
     <Style x:Key="ButtonStyle" TargetType="Button">
         <Setter Property="Margin" Value="5" />
         <Setter Property="Background" Value="{DynamicResource SystemControlBackgroundAltHighBrush}" />
