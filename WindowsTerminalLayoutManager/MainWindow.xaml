@@ -33,20 +33,11 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--ListView x:Name="TerminalInstanceSelector" Margin="5" Grid.Row="0">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" />
-                    <GridViewColumn Header="Type" DisplayMemberBinding="{Binding Type}" />
-                    <GridViewColumn Header="Last Used" DisplayMemberBinding="{Binding LastUsed}" />
-                </GridView>
-            </ListView.View>
-        </ListView-->
         <ComboBox
             x:Name="TerminalInstanceSelector"
             Grid.Row="0"
-            Margin="5"
-            SelectionChanged="TerminalInstanceSelector_SelectionChanged">
+            SelectionChanged="TerminalInstanceSelector_SelectionChanged"
+            Style="{DynamicResource ComboBoxStyle}">
             <ComboBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
@@ -83,11 +74,6 @@
                                         TextChanged="TextBox_TextChanged"
                                         Visibility="{Binding IsEditing, Converter={StaticResource BooleanToVisibilityConverter}}">
                                         <TextBox.ToolTip>
-                                            <!--
-                                                ToolTip Content="{Binding FileNameError}"
-                                                Visibility="{Binding FileNameErrorVisibility}"
-                                                IsOpen="{Binding FileNameErrorIsOpen}" /
-                                            -->
                                             <ToolTip
                                                 BorderBrush="Red"
                                                 FontStretch="Condensed"
@@ -103,8 +89,6 @@
             </ListView.View>
         </ListView>
 
-        <!--  Canvas x:Name="LayoutPreviewCanvas" Width="200" Height="200" Background="LightGray" Grid.Row="1" Margin="10"/  -->
-
         <StackPanel
             Grid.Row="2"
             Margin="5"
@@ -112,33 +96,33 @@
             Orientation="Horizontal">
             <Button
                 x:Name="DuplicateSelectedButton"
-                Margin="5"
                 Click="DuplicateSelectedButton_Click"
-                Content="Duplicate Selected" />
+                Content="Duplicate Selected"
+                Style="{DynamicResource ButtonStyle}" />
             <Button
                 x:Name="DeleteSelectedButton"
-                Margin="5"
                 Click="DeleteSelectedButton_Click"
-                Content="Delete Selected" />
+                Content="Delete Selected"
+                Style="{DynamicResource ButtonStyle}" />
             <Button
                 x:Name="SaveCurrentButton"
-                Margin="5"
                 Click="SaveCurrentButton_Click"
-                Content="Duplicate Default" />
+                Content="Duplicate Default"
+                Style="{DynamicResource ButtonStyle}" />
             <Button
                 x:Name="LoadSelectedButton"
-                Margin="5"
                 Click="LoadSelectedButton_Click"
-                Content="Start Selected Layout" />
+                Content="Start Selected Layout"
+                Style="{DynamicResource ButtonStyle}" />
             <Button
                 x:Name="OpenFolderButton"
-                Margin="5"
                 Click="OpenFolderButton_Click"
-                Content="Open Folder" />
+                Content="Open Folder"
+                Style="{DynamicResource ButtonStyle}" />
             <CheckBox
                 x:Name="RunAsAdmin"
-                Margin="5"
-                Content="Run As Admin" />
+                Content="Run As Admin"
+                Style="{DynamicResource CheckBoxStyle}" />
         </StackPanel>
     </Grid>
 </Window>

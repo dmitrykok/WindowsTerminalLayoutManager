@@ -9,6 +9,7 @@ using TerminalLayoutManager.Services;
 using TerminalLayoutManager.Utils;
 using Path = System.IO.Path;
 using Directory = System.IO.Directory;
+using ModernWpf;
 
 namespace TerminalLayoutManager
 {
