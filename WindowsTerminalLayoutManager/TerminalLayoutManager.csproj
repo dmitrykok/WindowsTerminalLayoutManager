@@ -13,6 +13,7 @@
     <PackageIcon>Logo.png</PackageIcon>
     <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
     <AnalysisLevel>preview-recommended</AnalysisLevel>
+    <Platforms>AnyCPU;x64;ARM64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,6 +33,7 @@
 
   <ItemGroup>
     <Folder Include="Models\" />
+    <Folder Include="Tools\" />
     <Folder Include="Resources\" />
   </ItemGroup>
 

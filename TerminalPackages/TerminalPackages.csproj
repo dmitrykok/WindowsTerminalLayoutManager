@@ -8,6 +8,7 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
     <ApplicationIcon>Logo.ico</ApplicationIcon>
     <PackageIcon>Logo.png</PackageIcon>
+    <Platforms>AnyCPU;x64;ARM64;x86</Platforms>
   </PropertyGroup>
 
   <ItemGroup>
