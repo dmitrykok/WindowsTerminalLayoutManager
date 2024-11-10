@@ -14,6 +14,7 @@
     <EnforceCodeStyleInBuild>False</EnforceCodeStyleInBuild>
     <AnalysisLevel>preview-recommended</AnalysisLevel>
     <Platforms>AnyCPU;x64;ARM64;x86</Platforms>
+    <FileVersion>1.0.28.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>

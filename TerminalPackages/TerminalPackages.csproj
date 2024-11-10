@@ -9,6 +9,7 @@
     <ApplicationIcon>Logo.ico</ApplicationIcon>
     <PackageIcon>Logo.png</PackageIcon>
     <Platforms>AnyCPU;x64;ARM64;x86</Platforms>
+    <AssemblyVersion>1.0.28.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

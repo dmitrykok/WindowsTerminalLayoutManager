@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using System.Text.Json;
+using System.Text.RegularExpressions;
 using Windows.Management.Deployment;
 
 namespace TerminalLayoutManager.Services
@@ -36,6 +37,31 @@ namespace TerminalLayoutManager.Services
 
     internal class Program
     {
+        static string GetCommonName(string distinguishedName)
+        {
+            if (string.IsNullOrWhiteSpace(distinguishedName))
+            {
+                throw new ArgumentException("Distinguished name is null or empty.", nameof(distinguishedName));
+            }
+
+            var match = Regex.Match(distinguishedName, @"CN\s*=\s*(?<cn>(""[^""]+"")|[^,]+)", RegexOptions.IgnoreCase);
+
+            if (match.Success)
+            {
+                var cnValue = match.Groups["cn"].Value.Trim();
+
+                // Remove quotes if present
+                if (cnValue.StartsWith("\"") && cnValue.EndsWith("\""))
+                {
+                    cnValue = cnValue.Substring(1, cnValue.Length - 2);
+                }
+
+                return cnValue;
+            }
+
+            throw new InvalidOperationException("CN not found in the distinguished name.");
+        }
+
         public static Dictionary<string, TerminalInfo> FindInstalledTerminals()
         {
             var terminals = new Dictionary<string, TerminalInfo>();
@@ -45,9 +71,10 @@ namespace TerminalLayoutManager.Services
 
             foreach (var package in packages)
             {
-                if (package.Id.FamilyName.Contains("WindowsTerminal"))
+                if (package.Id.FamilyName.Contains("Terminal"))
                 {
-                    terminals[package.DisplayName] = new TerminalInfo(
+                    string cn = GetCommonName(package.Id.Publisher);
+                    terminals[String.Format("{0, -36}  \t-> \"{1}\"", package.DisplayName, cn)] = new TerminalInfo(
                         package.Id.FamilyName,
                         package.Id.FamilyName,
                         package.DisplayName,
