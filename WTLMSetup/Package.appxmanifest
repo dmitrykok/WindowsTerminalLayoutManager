@@ -11,7 +11,7 @@
   <Identity
     Name="230c9acf-9a51-4305-94c2-a5db9917d0f3"
     Publisher="CN=Dm17tryK"
-    Version="1.0.28.0" />
+    Version="1.0.29.0" />
 
   <Properties>
     <DisplayName>WTLMSetup</DisplayName>
